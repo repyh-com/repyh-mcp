@@ -1,0 +1,49 @@
+{
+  "name": "repyh-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for founders: read your own decks, scores and investor matches, and get blunt pitch feedback. By REPYH, powered by NUVC.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "repyh-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "server.js",
+    "lib/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "start": "node server.js",
+    "start:stdio": "node index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "founder",
+    "pitch-deck",
+    "fundraising",
+    "startup",
+    "investor-matching",
+    "claude",
+    "repyh"
+  ],
+  "homepage": "https://app.repyh.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/repyh-com/repyh-mcp.git"
+  }
+}
