@@ -3,8 +3,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
+import { execFileSync } from "node:child_process";
 import { createHttpServer, extractApiKey } from "../server.js";
-import { createRateLimiter, accessLogLine, addressBucket, limitFromEnv } from "../lib/http-guards.js";
+import { createRateLimiter, accessLogLine, addressBucket, limitFromEnv, keyBucket } from "../lib/http-guards.js";
 import { stubApi, KEY_A } from "./helpers.js";
 
 const MCP_HEADERS = { "Content-Type": "application/json", Accept: "application/json, text/event-stream" };
@@ -188,4 +189,22 @@ test("F13: one access-log line per request: method, path without query, status, 
   });
   const line = accessLogLine({ name: "repyh-mcp", req: { method: "POST", url: "/mcp?x=1\nforged" }, status: 401, ms: 3, client: "::1" });
   assert.ok(!line.includes("\n") && !line.includes("x=1"));
+});
+
+
+test("key buckets are stable opaque identifiers, distinct between credentials and processes", () => {
+  const first = keyBucket(KEY_A);
+  assert.equal(keyBucket(KEY_A), first);
+  assert.match(first, /^[a-f0-9]{64}$/);
+  assert.notEqual(first, KEY_A);
+  assert.ok(!first.includes(KEY_A));
+  assert.notEqual(keyBucket(`${KEY_A}_other`), first);
+  const limiter = createRateLimiter({ limit: 1 });
+  assert.equal(limiter.take(first).ok, true);
+  assert.equal(limiter.take(keyBucket(KEY_A)).ok, false, "same credential keeps its bucket");
+  assert.equal(limiter.take(keyBucket(`${KEY_A}_other`)).ok, true);
+  const moduleUrl = new URL("../lib/http-guards.js", import.meta.url).href;
+  const child = execFileSync(process.execPath, ["--input-type=module", "-e", `import { keyBucket } from ${JSON.stringify(moduleUrl)}; process.stdout.write(keyBucket(${JSON.stringify(KEY_A)}));`], { encoding: "utf8" });
+  assert.match(child, /^[a-f0-9]{64}$/);
+  assert.notEqual(child, first, "a fresh process cannot correlate the bucket identifier");
 });
