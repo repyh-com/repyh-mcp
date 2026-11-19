@@ -98,7 +98,9 @@ node server.js  # HTTP; caller sends their own key in a header
 - **Scope of a founder key:** pitch analysis, the list of models, and your own decks' status, scores and
   matches. Asking for anything else answers "This API key cannot do that here."
 
-Tests: `pnpm --filter repyh-mcp test`.
+Tests: `npm test`.
+
+Before publishing a reviewed commit, commit all changes and run `bash scripts/verify-before-push.sh`. It rejects a dirty worktree, runs the full suite including release checks, and records verification for that exact commit. It does not push or publish.
 
 ## If a request does not complete
 
