@@ -8,7 +8,7 @@ Understand what your pitch proves, where the evidence is weak, and what to impro
 - Investor matches where your plan includes them.
 - Blunt feedback on pitch text.
 
-Before running a local source copy, use Node.js 18 or newer and install its dependencies from the directory containing this package's `package.json`:
+Before running a local source copy, use Node.js 20 or newer (Node.js 24 LTS recommended) and install its dependencies from the directory containing this package's `package.json`:
 
 ```bash
 npm install --ignore-scripts

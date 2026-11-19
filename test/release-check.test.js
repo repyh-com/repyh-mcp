@@ -48,7 +48,7 @@ test("package.json is publishable", () => {
   assert.notEqual(pkg.private, true);
   assert.equal(pkg.publishConfig?.access, "public");
   assert.equal(pkg.license, "MIT");
-  assert.equal(pkg.engines?.node, ">=18");
+  assert.equal(pkg.engines?.node, ">=20");
   assert.equal(pkg.type, "module");
   assert.ok(Array.isArray(pkg.files) && pkg.files.length > 0, "files allowlist is required");
   assert.ok(pkg.description.trim().length > 0 && pkg.description.length <= 140, "description is non-empty and at most 140 characters");
