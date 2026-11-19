@@ -2,11 +2,21 @@
 
 Understand what your pitch proves, where the evidence is weak, and what to improve before approaching investors. You choose what to change and whom to contact. Only your own data, bound to your key.
 
-**Release status:** this founder package is not released yet. The examples below run the local package source; do not assume an npm package or founder key creation is available. Existing compatible keys are supported; no founder key-page URL is verified.
+**Founder preview (0.1.0):** this release connects compatible existing founder accounts to their own decks and pitch feedback. Use the version-pinned package setup below or run a local source copy. A compatible existing API key is required; new founder key creation and backend features depend on account access and release availability. No founder key-page URL is verified.
 
 - Deck status and scores from 0 to 10.
 - Investor matches where your plan includes them.
 - Blunt feedback on pitch text.
+
+## GitHub release installation
+
+Release artifacts require Node.js 20 or newer (Node.js 24 LTS recommended). After the versioned GitHub release asset is available, configure your existing compatible key locally and run:
+
+```bash
+REPYH_API_KEY='replace_with_your_existing_key' npx --yes https://github.com/repyh-com/repyh-mcp/releases/download/v0.1.0/repyh-mcp-0.1.0.tgz
+```
+
+The npm commands and client configuration below require `repyh-mcp@0.1.0` to have been published to the npm registry. If that version is not available there, replace the `repyh-mcp@0.1.0` argument in your client configuration with the GitHub asset URL above. A GitHub release asset and an npm registry package are separate distribution channels; each installation path becomes usable when its corresponding artifact is published.
 
 Before running a local source copy, use Node.js 20 or newer (Node.js 24 LTS recommended) and install its dependencies from the directory containing this package's `package.json`:
 
@@ -39,6 +49,30 @@ Try:
 - *"List my decks and their status"*
 - *"What are the scores and key improvements on my latest deck?"*
 - *"Give me blunt feedback on this pitch: [paste]"*
+
+## Install the founder preview
+
+Use Node.js 20 or newer (Node.js 24 LTS recommended). Configure an existing compatible key locally, then run the version-pinned package:
+
+```bash
+REPYH_API_KEY='replace_with_your_existing_key' npx --yes repyh-mcp@0.1.0
+```
+
+For a desktop MCP client, use this server entry and replace the placeholder locally:
+
+```json
+{
+  "mcpServers": {
+    "repyh": {
+      "command": "npx",
+      "args": ["--yes", "repyh-mcp@0.1.0"],
+      "env": { "REPYH_API_KEY": "replace_with_your_existing_key" }
+    }
+  }
+}
+```
+
+Restart the client after configuration. Package installation does not create a key, activate a paid plan or enable backend features. For a local source copy, use the setup above instead.
 
 ## Confirm your connection without spending credits
 
